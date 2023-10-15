@@ -18,11 +18,6 @@ import java.util.List;
 @Controller
 public class CandidatController {
 
-    @GetMapping("")
-    public String index() {
-        return "test/index";
-    }
-
     @GetMapping("candidature")
     public String candidature(Model model, @RequestParam int besoin_id) {
         try {
