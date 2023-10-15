@@ -336,6 +336,13 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="/liste-employe">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">Employes</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="services.html">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Rendes-vous</span>
