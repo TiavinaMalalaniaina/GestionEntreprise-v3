@@ -3,6 +3,7 @@ package com.example.rh.Controller;
 import com.example.rh.Model.conge.Conge;
 import com.example.rh.Model.conge.TypeConge;
 import com.example.rh.Model.connections.Postgresql;
+import com.example.rh.Model.criteres.CritereBesoin;
 import com.example.rh.Model.poste.PosteEmploye;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 public class CongeController {
     @Autowired
@@ -69,5 +71,19 @@ public class CongeController {
         }
 
         return new RedirectView("");
+    }
+
+    @GetMapping("calendrier")
+    public String calendrier(Model model) {
+        try {
+            Connection connection = psql.connect();
+            Conge conge = new Conge();
+            Vector<Conge> listConge = conge.getAllConge(connection);
+            connection.close();
+            model.addAttribute("listConge", listConge);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "conge/calendrier";
     }
 }
