@@ -49,14 +49,15 @@ public class TypeConge {
     }
 
     public List<TypeConge> getTypeConge(Connection connection) throws SQLException {
+        String sql = "SELECT *FROM type_conge";
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT *FROM type_conge");
+        ResultSet resultSet = statement.executeQuery(sql);
         List<TypeConge> list = new ArrayList<>();
         while (resultSet.next()) {
             list.add(new TypeConge(
                     resultSet.getInt("id_type_conge"),
                     resultSet.getString("value"),
-                    resultSet.getBoolean("coptabilise")
+                    resultSet.getBoolean("comptabilise")
             ));
         }
         return list;

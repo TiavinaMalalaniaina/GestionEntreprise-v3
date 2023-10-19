@@ -1,12 +1,13 @@
 <%@ page import="com.example.rh.Model.conge.TypeConge" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.rh.Model.poste.PosteEmploye" %>
+<%@ page import="java.util.Vector" %>
+<%@ page import="com.example.rh.Model.poste.PersonnePoste" %>
 <%@
         page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %>
 <%
     List<TypeConge> typeCongeList = (List<TypeConge>) request.getAttribute("typeConge");
-    List<PosteEmploye> posteEmployes = (List<PosteEmploye>) request.getAttribute("posteEmploye");
+    Vector<PersonnePoste> personnePostes = (Vector<PersonnePoste>) request.getAttribute("personnePostes");
 %>
 
 <!DOCTYPE html>
@@ -18,14 +19,14 @@
     <title>Insertion conge</title>
 </head>
 <body>
-<form method="Get" action="conge">
+<form method="Get" action="insert-conge">
 <h1>Création d'un congé</h1>
 
 <p>Employe:</p>
-<select name="employe" value="typeConge">
+<select name="employe">
     <option disabled selected value="">-</option>
-    <% for(PosteEmploye posteEmploye : posteEmployes) { %>
-    <option value="<%= posteEmploye.getId() %>"><%= posteEmploye.getEmploye_id() %></option>
+    <% for(PersonnePoste personnePoste : personnePostes) { %>
+    <option value="<%= personnePoste.getPoste_id() %>"><%= personnePoste.getNom() %> <%= personnePoste.getPrenom() %></option>
     <% } %>
 </select>
 
@@ -38,11 +39,13 @@
 </p>
 
 <p>Type de conge:</p>
-    <select name="typeConge" value="typeConge">
+    <select name="typeConge">
         <option disabled selected value="">-</option>
         <% for(TypeConge typeConge : typeCongeList) { %>
         <option value="<%= typeConge.getId_type_conge() %>"><%= typeConge.getValue() %></option>
     <% } %>
+
+        <input type="submit" value="Créer Congé">
 </select>
 </form>
 </body>
