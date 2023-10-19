@@ -1,39 +1,42 @@
 package com.example.rh.Controller;
 
+import com.example.rh.Model.conge.Calendrier;
 import com.example.rh.Model.conge.Conge;
 import com.example.rh.Model.conge.TypeConge;
 import com.example.rh.Model.connections.Postgresql;
-import com.example.rh.Model.criteres.CritereBesoin;
-import com.example.rh.Model.poste.PosteEmploye;
+import com.example.rh.Model.poste.PersonnePoste;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Vector;
 
+@Controller
 public class CongeController {
     @Autowired
     private Postgresql psql;
 
     @GetMapping("conge")
-    public String insert(Model model) {
+    public String select(Model model) {
         try {
             Connection connection = psql.connect();
             TypeConge typeConge = new TypeConge();
             List<TypeConge> typeConges = typeConge.getTypeConge(connection);
+            model.addAttribute("typeConge", typeConges);
 
-            PosteEmploye posteEmploye = new PosteEmploye();
-            List<PosteEmploye> posteEmployes = posteEmploye.getPosteEmploye(connection);
+            PersonnePoste personnePoste = new PersonnePoste();
+            Vector<PersonnePoste> personnePostes = personnePoste.getAllPersonnePoste(connection);
+            model.addAttribute("personnePostes", personnePostes);
 
             connection.close();
-            model.addAttribute("typeConge", typeConges);
-            model.addAttribute("posteEmploye", posteEmploye);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,8 +44,8 @@ public class CongeController {
         return "conge/conge";
     }
 
-    @GetMapping("creer-conge")
-    public RedirectView CreerCritere(HttpServletRequest requests) throws Exception {
+    @GetMapping("insert-conge")
+    public String insert(HttpServletRequest requests) throws Exception {
         Connection connection = null;
 
         try {
@@ -52,16 +55,19 @@ public class CongeController {
             int employe_id = Integer.parseInt(requests.getParameter("employe"));
             String debutStr = requests.getParameter("debut");
             String finStr = requests.getParameter("fin");
-            int type = Integer.parseInt(requests.getParameter("typeConge"));
+            int type_id = Integer.parseInt(requests.getParameter("typeConge"));
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date debut = dateFormat.parse(debutStr);
-            Date fin = dateFormat.parse(finStr);
+            java.util.Date debutSql = dateFormat.parse(debutStr);
+            java.util.Date finSql = dateFormat.parse(finStr);
+
+            Date debut = new java.sql.Date(debutSql.getTime());
+            Date fin = new java.sql.Date(finSql.getTime());
 
             Conge conge = new Conge();
-            conge.create(connection, employe_id, debut, fin, type);
+            conge.create(connection, employe_id, debut, fin, type_id);
 
-            connection.commit();
+            //connection.commit();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -70,17 +76,17 @@ public class CongeController {
             connection.close();
         }
 
-        return new RedirectView("");
+        return "conge/inserer";
     }
 
     @GetMapping("calendrier")
     public String calendrier(Model model) {
         try {
             Connection connection = psql.connect();
-            Conge conge = new Conge();
-            Vector<Conge> listConge = conge.getAllConge(connection);
+            Calendrier calendrier = new Calendrier();
+            Vector<Calendrier> calendriers = calendrier.getAllCalendrier(connection);
+            model.addAttribute("calendriers", calendriers);
             connection.close();
-            model.addAttribute("listConge", listConge);
         } catch (Exception e) {
             e.printStackTrace();
         }

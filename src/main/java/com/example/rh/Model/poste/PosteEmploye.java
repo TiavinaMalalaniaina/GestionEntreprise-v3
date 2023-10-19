@@ -92,8 +92,10 @@ public class PosteEmploye {
     }
 
     public List<PosteEmploye> getPosteEmploye(Connection connection) throws SQLException {
+        String sql = "SELECT *FROM poste_employe";
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT *FROM poste_employe");
+        ResultSet resultSet = statement.executeQuery(sql);
+        System.out.println(sql);
         List<PosteEmploye> list = new ArrayList<>();
         while (resultSet.next()) {
             list.add(new PosteEmploye(

@@ -1,10 +1,12 @@
 <%@ page import="com.example.rh.Model.conge.Conge" %>
 <%@ page import="java.util.Vector" %>
+<%@ page import="com.example.rh.Model.conge.Calendrier" %>
+<%@ page import="java.sql.Date" %>
 <%@
         page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %>
 <%
-    Vector<Conge> listConge = (Vector<Conge>) request.getAttribute("listConge");
+    Vector<Calendrier> calendriers = (Vector<Calendrier>) request.getAttribute("calendriers");
 %>
 
 <!DOCTYPE html>
@@ -27,18 +29,13 @@
             },
             initialView: 'timeGridWeek',
             events: [
+                <% for(Calendrier calendrier : calendriers) { %>
                 {
-                    <% for(Conge conge : listConge) { %>
-                    title: <%= conge.getValeur() %>,
-                    start: <%= conge.getDebut() %>,
-                    end: <%= conge.getFin() %>
-                    <% } %>
+                    title: ' Nom: <%= calendrier.getPrenom() %> Cause: <%= calendrier.getValue() %>',
+                    start: '<%= calendrier.getDebut() %>',
+                    end: '<%= calendrier.getFin() %>'
                 },
-                {
-                    title: 'Événement 2',
-                    start: '2023-10-20T14:00:00',
-                    end: '2023-10-20T16:00:00'
-                }
+                    <% } %>
             ]
         });
         calendar.render();
