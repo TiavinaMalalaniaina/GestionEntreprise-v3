@@ -41,6 +41,9 @@ CREATE  TABLE "public".candidat (
 	CONSTRAINT pk_candidat PRIMARY KEY ( id )
  );
 
+INSERT INTO candidat(nom, prenom, dtn, email) VALUES
+    ('RAMAROSON', 'Benja', '12-05-1990', 'benja@gmail.com');
+
 CREATE  TABLE "public".categorie_critere ( 
 	id                   integer DEFAULT nextval('categorie_critere_id_seq'::regclass) NOT NULL  ,
 	nom                  varchar(20)  NOT NULL  ,
@@ -133,7 +136,7 @@ CREATE  TABLE "public".demande (
 	besoin_id            integer  NOT NULL  ,
 	CONSTRAINT pk_demande PRIMARY KEY ( id ),
 	CONSTRAINT fk_demande_besoin FOREIGN KEY ( besoin_id ) REFERENCES "public".besoin( id )   ,
-	CONSTRAINT fk_demande_candidat FOREIGN KEY ( candidat_id ) REFERENCES "public".candidat( id )   
+	CONSTRAINT fk_demande_candidat FOREIGN KEY ( candidat_id ) REFERENCES "public".candidat( id )
  );
 
 CREATE  TABLE "public".questionnaire ( 

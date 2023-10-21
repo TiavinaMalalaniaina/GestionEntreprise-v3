@@ -2,10 +2,7 @@ package com.example.rh.Model.candidats;
 
 import com.example.rh.Model.connections.ConnectionWrapper;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,13 +126,60 @@ public class Candidat {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Candidat candidat = new Candidat();
-                candidat.setId(resultSet.getInt("id"));
+                candidat.setId(resultSet.getInt("candidat_id"));
                 candidat.setNom(resultSet.getString("nom"));
                 candidat.setPrenom(resultSet.getString("prenom"));
                 candidat.setDtn(resultSet.getDate("dtn"));
                 candidat.setEmail(resultSet.getString("email"));
                 candidats.add(candidat);
             }
+        }
+        if (!cw.wasOpen()) connection.close();
+        return candidats;
+    }
+
+    public Candidat getCandidat(Connection connection, int id) throws Exception {
+        ConnectionWrapper cw = new ConnectionWrapper(connection);
+        connection = cw.getConnection();
+
+        String query = "SELECT * FROM v_besoin_candidat WHERE id =?";
+        Candidat candidat = new Candidat();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            candidat.setId(resultSet.getInt("candidat_id"));
+            candidat.setNom(resultSet.getString("nom"));
+            candidat.setPrenom(resultSet.getString("prenom"));
+            candidat.setDtn(resultSet.getDate("dtn"));
+            candidat.setEmail(resultSet.getString("email"));
+
+
+        }
+        if (!cw.wasOpen()) connection.close();
+        return candidat;
+    }
+
+    public List<Candidat> getCandidats(Connection connection) throws Exception {
+        ConnectionWrapper cw = new ConnectionWrapper(connection);
+        connection = cw.getConnection();
+
+        String query = "SELECT * FROM v_besoin_candidat";
+        Candidat candidat = new Candidat();
+        List<Candidat> candidats = new ArrayList<>();
+        try (Statement statement = connection.createStatement()){
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+
+                candidat.setId(resultSet.getInt("candidat_id"));
+                candidat.setNom(resultSet.getString("nom"));
+                candidat.setPrenom(resultSet.getString("prenom"));
+                candidat.setDtn(resultSet.getDate("dtn"));
+                candidat.setEmail(resultSet.getString("email"));
+                candidats.add(candidat);
+            }
+
         }
         if (!cw.wasOpen()) connection.close();
         return candidats;
