@@ -81,3 +81,18 @@ insert into critere_besoin values
     (default, 5, 8, 2),
     (default, 5, 12, 2),
     (default, 5, 14, 2);
+
+insert into type_conge values
+    (default, 'Maladie', false),
+    (default, 'Non mentionner', true);
+
+insert into poste(id, service_action_id, type) values
+    (default, 1, 'Directeur comptabilite'),
+    (default, 1, 'Comptable', 1);
+
+insert into poste_employe(id, poste_id, debut, essaie, salaire, employe_id) values
+    (default, 1, '15-10-2020', false, 15000, 7),
+    (default, 2, '15-10-2022', '15-10-2024', false, 10000, 6);
+
+insert into conge(id, poste_employe_id, debut, fin, validation, type_conge_id) values
+    (default, 2, '15-10-2023', '20-10-2023', 1, 2);

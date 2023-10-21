@@ -1,6 +1,7 @@
 package com.example.rh.Model.criteres;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Critere {
@@ -63,7 +64,7 @@ public class Critere {
     }
 
     public Vector<Critere> getCandidatCriteres(Connection connection, int candidat_id) throws SQLException {
-        String sql = "SELECT * FROM v_candidat_critere WHERE candidat_id=?";
+        String sql = "SELECT * FROM v_critere_candidat WHERE candidat_id=?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, candidat_id);
         ResultSet resultSet = statement.executeQuery();
@@ -86,6 +87,20 @@ public class Critere {
         Vector<Critere> listCritere = new Vector<>();
         while (resultSet.next()) {
             listCritere.addElement(new Critere(resultSet.getInt("id"), resultSet.getString("element")));
+        }
+        statement.close();
+        return listCritere;
+    }
+
+    public ArrayList<Critere> getCritereByCategorie(Connection connection, int categorie_id) throws SQLException {
+        String sql = "SELECT * FROM critere WHERE categorie_critere_id=?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, categorie_id);
+        ResultSet resultSet = statement.executeQuery();
+
+        ArrayList<Critere> listCritere = new ArrayList<>();
+        while (resultSet.next()) {
+            listCritere.add(new Critere(resultSet.getInt("id"), resultSet.getString("element")));
         }
         statement.close();
         return listCritere;
