@@ -21,7 +21,7 @@ import java.util.Vector;
 @RequestMapping("/")
 public class LoginController {
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String Index(Model model) {
         model.addAttribute("email", "exemple@gmail.com");
         model.addAttribute("mot_de_passe", "********");

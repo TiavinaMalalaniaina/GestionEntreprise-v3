@@ -1,7 +1,8 @@
-<%@ page import="com.example.rh.Model.services.Besoin" %>
+<%@ page import="com.example.rh.Model.criteres.CategorieCritere" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.example.rh.Model.criteres.Critere" %>
+<%@ page import="com.example.rh.Model.services.Besoin" %>
 <%@ page import="com.example.rh.Model.candidats.Candidat" %>
-<% List<Candidat> candidats = (List<Candidat>) request.getAttribute("candidats"); %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +19,7 @@
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="/back_office/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="/back_office/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/back_office/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" type="text/css" href="/back_office/js/select.dataTables.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -25,6 +27,8 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="/back_office/images/favicon.png" />
 
+    <!-- pour le modal-->
+    <link rel="stylesheet" href="/back_office/modal/cs/bootstrap.min.css">
     <style>
         .mt-auto {
             text-align: center;
@@ -42,6 +46,9 @@
         .font-weight-normal p {
             color: rgb(3, 43, 131);
             font-weight: lighter;
+        }
+        .button {
+            padding-top: 30px;
         }
 
     </style>
@@ -78,32 +85,35 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Listes des candidatures</h4>
-
+                        <h4 class="card-title">Candidats en periode d'essaie</h4>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Service</th>
+                                    <th>profil</th>
                                     <th>Nom</th>
                                     <th>Prenom</th>
                                     <th>Date de naissance</th>
-                                    <th>Email</th>
+                                    <th>Reste periode essaie</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for (Candidat candidat : candidats) { %>
+                                <% for (Candidat candidat : (List<Candidat>)request.getAttribute("candidats")) { %>
                                     <tr>
-                                        <td></td>
+                                        <td class="py-1">
+                                            <img src="../../images/faces/face1.jpg" alt="image"/>
+                                        </td>
                                         <td><%= candidat.getNom() %></td>
                                         <td><%= candidat.getPrenom() %></td>
                                         <td><%= candidat.getDtn() %></td>
-                                        <td><%= candidat.getEmail() %></td>
-                                        <td><a href="candidat-a-embaucher?candidatId=<%= candidat.getId() %>"><button type="button" class="btn btn-inverse-info btn-fw">Embaucher</button></a></td>
+                                        <td>22 jours</td>
+                                        <td><button type="button" class="btn btn-inverse-info btn-fw">Valider</button></td>
+                                        <td><button type="button" class="btn btn-inverse-danger btn-fw">Refuser</button></td>
                                     </tr>
                                 <% } %>
-                                </tbody>
+                               </tbody>
                             </table>
                         </div>
                     </div>
@@ -119,9 +129,8 @@
     </div>
     <!-- main-panel ends -->
 </div>
-<!-- page-body-wrapper ends -->
-</div>
-<!-- container-scroller -->
+
+
 
 <!-- plugins:js -->
 <script src="/back_office/vendors/js/vendor.bundle.base.js"></script>
@@ -145,6 +154,14 @@
 <script src="/back_office/js/Chart.roundedBarCharts.js"></script>
 <!-- End custom js for this page-->
 <script src="/back_office/js/date-heures.js" ></script>
+
+<!--pour le modal -->
+<script src="/back_office/modal/js/bootstrap.min.js"></script>
+
+<!-- pour coefficient -->
+
+<script src="/librairies/jquery.js"></script>
+
 </body>
 
 </html>

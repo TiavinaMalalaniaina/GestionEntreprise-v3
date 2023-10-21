@@ -343,6 +343,21 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#candidats" aria-expanded="false" aria-controls="ui-basic">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">Candidats</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="candidats">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="candidats-en-periode-essaie">Candidats en essais</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="tous-candidats">Tous les candidats</a></li>
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
                 <a class="nav-link" href="services.html">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Historiques</span>

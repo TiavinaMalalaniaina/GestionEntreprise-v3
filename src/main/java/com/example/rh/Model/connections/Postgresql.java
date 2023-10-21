@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 public class Postgresql {
     private String url = "jdbc:postgresql://localhost:5432/gestion_entreprise";
     private String utilisateur = "postgres";
-    private String motDePasse = "malalaniaina";
+    private String motDePasse = "Etu002057";
 
 
     public Connection connect() throws Exception {
